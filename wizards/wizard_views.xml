@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   
+    <record id="view_wizard_form" model="ir.ui.view">
+        <field name="name">college.wizard.form</field>
+        <field name="model">college.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Your Wizard">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="age"/>
+                    </group>
+                    <footer>
+                        <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_wizard_list" model="ir.ui.view">
+    <field name="name">college.wizard.list</field>
+    <field name="model">college.wizard</field>
+    <field name="arch" type="xml">
+       <list>
+                 <field name="name" readonly="1"/>
+                 <field name="age"/>
+       </list>
+       </field>
+    </record>
+
+
+
+    <record id="action_your_wizard" model="ir.actions.act_window">
+    <field name="name">Update Age</field>
+    <field name="res_model">college.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="context">{'active_ids': active_ids}</field>
+</record>
+
+
+<record id="action_update_age" model="ir.actions.server">
+    <field name="name">Update Age</field>
+    <field name="model_id" ref="model_college_student"/>
+    <field name="state">code</field>
+    <field name="binding_model_id" ref="model_college_student"/>
+    <field name="binding_type">action</field>
+    <field name="binding_view_types">list,form</field>
+    <field name="code">
+action = env.ref('colleges.action_your_wizard').sudo().read()[0]
+action['context'] = {'active_ids': records.ids}
+action
+     
+       </field>
+       </record>
+</odoo>
+       
+
+
+
+    
+ 
